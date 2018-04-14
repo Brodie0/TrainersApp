@@ -23,9 +23,9 @@ class Dto {
         return json.toString()
     }
 
-    fun post(table : String) : String {
+    fun post(table : String, body : String) : String {
         val path = Config.entryPoint + table
-        val json = MyDownloadTask().execute(path, "POST").get()
+        val json = MyDownloadTask().execute(path, "POST", body).get()
         return json.toString()
     }
 }
@@ -43,14 +43,15 @@ internal class MyDownloadTask : AsyncTask<String, Void, String>() {
         val method = params[1]
         with(obj.openConnection() as HttpURLConnection) {
             requestMethod = method
-//            setRequestProperty("Content-Type", "application/json; charset=UTF-8")
-//            setRequestMethod("POST")
-//            setDoInput(true)
-//            setInstanceFollowRedirects(false)
-//            connect()
-//            val writer = OutputStreamWriter(getOutputStream(), "UTF-8")
-//            writer.write(payload)
-//            writer.close()
+            if(method == "POST"){
+                setRequestProperty("Content-Type", "application/json; charset=UTF-8")
+                doInput = true
+                instanceFollowRedirects = false
+                connect()
+                val writer = OutputStreamWriter(outputStream, "UTF-8")
+                writer.write(params[2])
+                writer.close()
+            }
             BufferedReader(InputStreamReader(inputStream)).use {
                 var inputLine = it.readLine()
                 while (inputLine != null) {
