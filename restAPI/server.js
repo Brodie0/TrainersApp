@@ -47,7 +47,7 @@ app.get('/users/:id', (req, res, next) => {
     })
 })
 
-app.post('/newUser', (req, res, next) => {
+app.post('/users', (req, res, next) => {
     connection.query(`SELECT * FROM users WHERE login="${req.body.login}"`, (err, result, fields) => {
         console.log(result)
         if(result == undefined || result.length == 0){
