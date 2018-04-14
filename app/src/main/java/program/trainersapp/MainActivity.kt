@@ -13,13 +13,6 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var df = Dto()
-        df.get("users")
-        df.getById("users", 1)
-        var js = JSONObject()
-        js.put("login", "logiiin")
-        js.put("password", "passwd")
-        df.post("users", js.toString())
         this.register.setOnClickListener {
             val reg = Intent(this, Register::class.java)
             startActivity(reg)
