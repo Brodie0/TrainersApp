@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TrainersApp</string>
+    <string name="zaloguj">Zaloguj</string>
+    <string name="login" />
+    <string name="password" />
+    <color name="white">#CAADD8E6</color>
+</resources>
