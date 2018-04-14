@@ -8,6 +8,7 @@ import java.net.URL
 import android.os.AsyncTask
 import com.beust.klaxon.Klaxon
 import com.beust.klaxon.KlaxonDoc
+import java.io.OutputStreamWriter
 
 
 class Dto {
