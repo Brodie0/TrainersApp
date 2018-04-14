@@ -17,5 +17,9 @@ class MainActivity : Activity() {
             val reg = Intent(this, Register::class.java)
             startActivity(reg)
         }
+        this.LoginButton.setOnClickListener {
+            val next = Intent(this, Info::class.java)
+            startActivity(next)
+        }
     }
 }
