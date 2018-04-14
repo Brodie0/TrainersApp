@@ -19,11 +19,10 @@ class Dto {
 
     fun getById(table : String, id : Int) : String{
         val path = Config.entryPoint + table + "/" + id.toString()
-        Log.d("kupsko", path)
         val json = MyDownloadTask().execute(path).get()
-        Log.d("kupsko1", json)
         return json.toString()
     }
+
 }
 
 internal class MyDownloadTask : AsyncTask<String, Void, String>() {
@@ -36,8 +35,9 @@ internal class MyDownloadTask : AsyncTask<String, Void, String>() {
     override fun doInBackground(vararg params: String): String {
         val response = StringBuffer()
         val obj = URL(params[0])
+        val method = params[1]
         with(obj.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"
+            requestMethod = method
             BufferedReader(InputStreamReader(inputStream)).use {
                 var inputLine = it.readLine()
                 while (inputLine != null) {
