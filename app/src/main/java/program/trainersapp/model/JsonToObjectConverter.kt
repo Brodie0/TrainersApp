@@ -1,7 +1,7 @@
 package program.trainersapp.model
 
 import com.beust.klaxon.Klaxon
-import program.trainersapp.model.Entities.ActiveUser
+import program.trainersapp.model.entities.ActiveUser
 
 class JsonToObjectConverter{
     fun activeUser(json : String) : ActiveUser {

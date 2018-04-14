@@ -1,4 +1,4 @@
-package program.trainersapp.model.Entities
+package program.trainersapp.model.entities
 
 class ActiveUser (
     val name: String,
