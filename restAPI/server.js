@@ -52,7 +52,7 @@ app.post('/users', (req, res, next) => {
         console.log(result)
         if(result == undefined || result.length == 0){
             
-            connection.query(`INSERT INTO users(login, password) VALUES ("${req.body.login}","${req.body.pass}");`, (err, result) => {
+            connection.query(`INSERT INTO users(login, password) VALUES ("${req.body.login}","${req.body.password}");`, (err, result) => {
                 if (err) throw err
                 
                 console.log('user added')
@@ -90,8 +90,26 @@ app.post('/newRecord', (req, res, next) => {
     })
 })
 
+// app.get('/activeUsers', (req, res, next) => {
+//     connection.query('SELECT * FROM activeUsers;', (err, result, fields) => {
+//         if(err) throw err
+
+//         res.json(result)
+//     })
+// })
+
+app.post('/checkUser', (req, res, next) => {
+    connection.query(`SELECT * FROM users WHERE login="${req.body.login}" AND password="${req.body.password}"`, (err, result, fields) => {
+        if(result == undefined || result.length == 0){
+            res.json({"status" : false})
+        } else {
+            res.json({"status" : true})
+        }
+    })
+})
+
 app.get('/activeUsers', (req, res, next) => {
-    connection.query('SELECT * FROM activeUsers;', (err, result, fields) => {
+    connection.query('SELECT users.name, users.lastname, activeUsers.longt, activeUsers.latt FROM activeUsers INNER JOIN users ON activeUsers.user=users.id', (err, result, fields) => {
         if(err) throw err
 
         res.json(result)
