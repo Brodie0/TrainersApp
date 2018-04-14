@@ -12,8 +12,8 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         this.register.setOnClickListener {
-            val register = Intent(this, Register::class.java)
-            startActivity(register)
+            val reg = Intent(this, Register::class.java)
+            startActivity(reg)
         }
     }
 }
