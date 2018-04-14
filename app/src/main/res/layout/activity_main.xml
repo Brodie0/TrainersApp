@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,8 +12,9 @@
         android:id="@+id/layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/layout"
+        android:gravity="center"
         android:orientation="vertical"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -25,21 +26,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@android:color/background_dark"
+            android:gravity="center"
             android:text="LOGOWANIE"
+            android:textColor="@android:color/background_dark"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/LoginText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:background="@android:color/white"
-            android:layout_marginLeft="20dp"
             android:layout_below="@id/name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/round"
             android:hint="Login"
             android:inputType="textPersonName" />
 
@@ -47,11 +48,11 @@
             android:id="@+id/PassText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
             android:layout_below="@id/LoginText"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round"
             android:hint="Hasło"
             android:inputType="textPassword" />
 
@@ -59,11 +60,12 @@
             android:id="@+id/LoginButton"
             android:layout_width="200dp"
             android:layout_height="40dp"
+            android:layout_below="@id/PassText"
+            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:baselineAligned="false"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:layout_below="@id/PassText"
+            android:background="@drawable/round_button"
             android:text="@string/zaloguj"
             android:textAlignment="center"
             android:textStyle="bold"
@@ -76,22 +78,22 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/LoginButton"
             android:layout_marginTop="10dp"
-            android:textColor="@android:color/background_dark"
+            android:gravity="center"
             android:text="Zapomniałeś hasła?"
-            android:gravity="center"/>
+            android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/forgotPass"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:textColor="@android:color/background_dark"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="Chcesz stworzyć konto?"
-            android:gravity="center"/>
+            android:textColor="@android:color/background_dark" />
 
 
     </RelativeLayout>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
