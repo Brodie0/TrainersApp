@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : false}))
 
 var connection = mysql.createConnection({
-    host: '192.168.0.94',
+    host: '172.20.10.4',
     user: "root",
     password: "kramptopedal",
     database: "db"
@@ -49,10 +49,10 @@ app.get('/users/:id', (req, res, next) => {
 
 app.post('/newUser', (req, res, next) => {
     connection.query(`SELECT * FROM users WHERE login="${req.body.login}"`, (err, result, fields) => {
-        
-        if(result == undefined){
+        console.log(result)
+        if(result == undefined || result.length == 0){
             
-            connection.query(`INSERT INTO users(login, password) VALUES ("${req.body.login}","'${req.body.pass}");`, (err, result) => {
+            connection.query(`INSERT INTO users(login, password) VALUES ("${req.body.login}","${req.body.pass}");`, (err, result) => {
                 if (err) throw err
                 
                 console.log('user added')
@@ -82,3 +82,18 @@ app.put('/updatePass', (req, res, next) => {
     })
 })
 
+app.post('/newRecord', (req, res, next) => {
+    connection.query(`INSERT INTO history(user,partner,distance,total_time) VALUES("${req.body.user}", "${req.body.partner}", "${req.body.distance}", "${req.body.time}");`, (err, result) => {
+        if (err) throw err
+
+        console.log('record added')
+    })
+})
+
+app.get('/activeUsers', (req, res, next) => {
+    connection.query('SELECT * FROM activeUsers;', (err, result, fields) => {
+        if(err) throw err
+
+        res.json(result)
+    })
+})
