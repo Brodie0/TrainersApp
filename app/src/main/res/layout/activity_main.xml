@@ -73,20 +73,10 @@
             app:layout_constraintTop_toBottomOf="@+id/PassText" />
 
         <TextView
-            android:id="@+id/forgotPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/LoginButton"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Zapomniałeś hasła?"
-            android:textColor="@android:color/background_dark" />
-
-        <TextView
             android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/forgotPass"
+            android:layout_below="@id/LoginButton"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
