@@ -66,10 +66,19 @@ app.post('/newUser', (req, res, next) => {
     })  
 })
 
-app.put('/updateUser', (req, res, next) => {
+app.put('/updateName', (req, res, next) => {
+    connection.query(`UPDATE users SET name="${req.body.name}", lastname="${req.body.lastname}" WHERE login="${req.body.login}";`, (err, result) => {
+        if(err) throw err
+
+        console.log('user name updated')
+    })
+})
+
+app.put('/updatePass', (req, res, next) => {
     connection.query(`UPDATE users SET password="${req.body.pass}" WHERE login="${req.body.login}";`, (err, result) => {
         if (err) throw err
 
-        console.log('user updated')
+        console.log('user pass updated')
     })
 })
+
