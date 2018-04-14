@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import program.trainersapp.model.Dto
 
 class MainActivity : Activity() {
