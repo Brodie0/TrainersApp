@@ -6,7 +6,8 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import android.os.AsyncTask
-
+import com.beust.klaxon.Klaxon
+import com.beust.klaxon.KlaxonDoc
 
 
 class Dto {
@@ -24,6 +25,26 @@ class Dto {
     }
 
 }
+
+class ToObject{
+
+    fun activeUser(json : String) : ActiveUser {
+        val getter = Dto()
+        val result = Klaxon()
+                .parse<ActiveUser>(json)
+
+        return result!!
+    }
+
+}
+
+class ActiveUser(
+        val id: Int,
+        val user: Int,
+        val longt: Float,
+        val latt: Float
+)
+
 
 internal class MyDownloadTask : AsyncTask<String, Void, String>() {
 
