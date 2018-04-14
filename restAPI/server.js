@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : false}))
 
 var connection = mysql.createConnection({
-    host: '172.20.10.4',
+    host: '192.168.43.196',
     user: "root",
     password: "kramptopedal",
     database: "db"
@@ -40,7 +40,7 @@ app.get('/users', function(req, res, next){
 })
 
 app.get('/users/:id', (req, res, next) => {
-    connection.query('SELECT * FROM users WHERE user_id=' + req.params.id, (err, result, fields) => {
+    connection.query('SELECT * FROM users WHERE id=' + req.params.id, (err, result, fields) => {
         if(err) throw err
         console.log(req.params.id)
         res.json(result[0])
@@ -95,5 +95,13 @@ app.get('/activeUsers', (req, res, next) => {
         if(err) throw err
 
         res.json(result)
+    })
+})
+
+app.get('/activeUsers/:id', (res, req, next) => {
+    connection.query('SELECT * FROM activeUsers WHERE id=' + req.params.id, (err, result, fields) => {
+        if(err) throw err
+        console.log(req.params.id)
+        res.json(result[0])
     })
 })

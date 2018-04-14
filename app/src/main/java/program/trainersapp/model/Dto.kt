@@ -6,29 +6,49 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import android.os.AsyncTask
-import java.io.OutputStreamWriter
+import com.beust.klaxon.Klaxon
+import com.beust.klaxon.KlaxonDoc
 
 
 class Dto {
 
     fun get(table : String) : String {
         val path = Config.entryPoint + table
-        val json = MyDownloadTask().execute(path, "GET").get()
+        val json = MyDownloadTask().execute(path).get()
         return json.toString()
     }
 
-    fun getById(table : String, id : Int) : String {
+    fun getById(table : String, id : Int) : String{
         val path = Config.entryPoint + table + "/" + id.toString()
-        val json = MyDownloadTask().execute(path, "GET").get()
+        val json = MyDownloadTask().execute(path).get()
         return json.toString()
     }
 
-    fun post(table : String, body : String) : String {
+	fun post(table : String, body : String) : String {
         val path = Config.entryPoint + table
         val json = MyDownloadTask().execute(path, "POST", body).get()
         return json.toString()
+	}
+}
+
+class ToObject{
+
+    fun activeUser(json : String) : ActiveUser {
+        val getter = Dto()
+        val result = Klaxon()
+                .parse<ActiveUser>(json)
+
+        return result!!
     }
 }
+
+class ActiveUser(
+        val id: Int,
+        val user: Int,
+        val longt: Float,
+        val latt: Float
+)
+
 
 internal class MyDownloadTask : AsyncTask<String, Void, String>() {
 
