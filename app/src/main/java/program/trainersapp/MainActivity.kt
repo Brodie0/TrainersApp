@@ -38,7 +38,7 @@ class MainActivity : Activity() {
             else {
                 loginTV.setText("")
                 passTV.setText("")
-                Toast.makeText(this@MainActivity, "Wrong login and/or password!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@MainActivity, "Wrong login and/or password!", Toast.LENGTH_SHORT).show()
             }
 
 
