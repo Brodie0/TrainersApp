@@ -35,7 +35,7 @@ class Info : Activity() {
             this.history.setBackgroundColor(Color.CYAN)
             this.stats.setBackgroundColor(Color.WHITE)
             this.friends.setBackgroundColor(Color.WHITE)
-            val jsonHistory = JsonParser().parse(Database.getById("history", 1))
+            val jsonHistory = JsonParser().parse(database.getById("history", 1))
             listDataHeader = ArrayList()
             listHash = HashMap()
             for(it in jsonHistory) {
