@@ -3,25 +3,22 @@ package program.trainersapp
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.widget.Toast
-import com.beust.klaxon.JsonObject
-import com.beust.klaxon.Parser
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import org.json.JSONObject
+import com.google.gson.Gson
+import com.google.gson.JsonParser
 import program.trainersapp.model.Dto
-import program.trainersapp.model.ToObject
+import program.trainersapp.model.entities.ActiveUser
 
 class MapsActivity : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
@@ -50,14 +47,19 @@ class MapsActivity : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListen
         mMap = googleMap
         val dto = Dto()
         val json = dto.get("activeusers")
-        val jsonData: JsonObject = Parser().parse(json) as JsonObject
-        var cos = JSONObject(json)
-        var actUser = ToObject().activeUser(json)
-        Log.d("aaaa", actUser.latt.toString())
+        var parser = program.trainersapp.model.JsonParser()
+        var parsed = parser.parse(json)
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        for (i in 0..parsed.size-1) {
+            var actUser = Gson().fromJson(parsed[i], ActiveUser::class.java)
+            val location = LatLng(actUser.longt.toDouble(), actUser.latt.toDouble())
+
+            // Changing marker icon
+            val marker = MarkerOptions().position(location).title(actUser.name + " " + actUser.lastname)
+            //marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.my_marker_icon)));
+            mMap!!.addMarker(marker)
+            mMap!!.moveCamera(CameraUpdateFactory.newLatLng(location))
+        }
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap!!.isMyLocationEnabled = true
             mMap!!.setOnMyLocationButtonClickListener(this)
