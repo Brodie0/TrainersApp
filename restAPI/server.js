@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : false}))
 
 var connection = mysql.createConnection({
-    host: '192.168.43.196',
+    host: '172.20.10.4',
     user: "root",
     password: "kramptopedal",
     database: "db"
@@ -21,14 +21,6 @@ app.listen(3000, function() {
 
 app.get('/', function(req, res){
     res.send('ye')
-})
-
-app.get('/test', function(){
-    connection.query('INSERT INTO users (login, password) VALUES ("kramp","asd");', function(err, result){
-        if (err) throw err
-
-        console.log('1 row added');
-    })
 })
 
 app.get('/users', function(req, res, next){
@@ -90,13 +82,20 @@ app.post('/newRecord', (req, res, next) => {
     })
 })
 
-// app.get('/activeUsers', (req, res, next) => {
-//     connection.query('SELECT * FROM activeUsers;', (err, result, fields) => {
-//         if(err) throw err
+app.get('/history/:id', (req, res, next) => {
+    connection.query(`SELECT users.name, users.lastname, history.distance, history.total_time, history.workout_date FROM history INNER JOIN users ON history.partner=users.id WHERE history.user=` + req.params.id, (err, result, fields) => {
+        if(err) throw err
+        res.json(result);
+    })
+})
 
-//         res.json(result)
-//     })
-// })
+app.get('/history/', (req, res, next) => {
+    connection.query('SELECT * FROM history', (err, result, fields) => {
+        if(err) throw err
+
+        res.json(result)
+    })
+})
 
 app.post('/checkUser', (req, res, next) => {
     connection.query(`SELECT * FROM users WHERE login="${req.body.login}" AND password="${req.body.password}"`, (err, result, fields) => {
@@ -109,6 +108,7 @@ app.post('/checkUser', (req, res, next) => {
 })
 
 app.get('/activeUsers', (req, res, next) => {
+    console.log("asdasdas")
     connection.query('SELECT users.name, users.lastname, activeUsers.longt, activeUsers.latt FROM activeUsers INNER JOIN users ON activeUsers.user=users.id', (err, result, fields) => {
         if(err) throw err
 
@@ -116,10 +116,12 @@ app.get('/activeUsers', (req, res, next) => {
     })
 })
 
-app.get('/activeUsers/:id', (res, req, next) => {
-    connection.query('SELECT * FROM activeUsers WHERE id=' + req.params.id, (err, result, fields) => {
+app.get('/activeUsers/:id', (req, res, next) => {
+    console.log("DEBIG ID")
+    console.log(req.params.id)
+    connection.query('SELECT users.name, users.lastname, activeUsers.longt, activeUsers.latt FROM activeUsers INNER JOIN users ON activeUsers.user=users.id WHERE activeUsers.id=' + req.params.id, (err, result, fields) => {
         if(err) throw err
-        console.log(req.params.id)
+       
         res.json(result[0])
     })
 })
