@@ -24,8 +24,7 @@ class Info : Activity() {
             this.history.setBackgroundColor(Color.CYAN)
             this.stats.setBackgroundColor(Color.WHITE)
             this.friends.setBackgroundColor(Color.WHITE)
-            val jsonHistory = Database.getById("records", 1)
-            jsonHistory.length
+            val jsonHistory = Database.getById("history", 1)
         }
         this.friends.setOnClickListener {
             this.friends.setBackgroundColor(Color.CYAN)
