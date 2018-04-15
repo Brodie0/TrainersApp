@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_info.*
@@ -18,10 +19,12 @@ class Info : Activity() {
     private var listDataHeader: ArrayList<String>? = null
     private var listHash: HashMap<String, ArrayList<String>>? = null
     val database = Dto()
+    var bundle: Any? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
 
+        bundle = intent.extras
 
         //On Click Actions
         this.stats.setOnClickListener {

@@ -29,7 +29,8 @@ class MainActivity : Activity() {
         if (logged == "true")
         {
             val next = Intent(this, Info::class.java)
-            startActivity(next)
+            next.putExtra("Id", id)
+            startActivityForResult(next, 1)
         }
 
         this.register.setOnClickListener {
@@ -54,7 +55,8 @@ class MainActivity : Activity() {
                 settings.edit().putString("Logged in", "true").putString("id", id).commit()
                 //Go to next window
                 val next = Intent(this, Info::class.java)
-                startActivity(next)
+                next.putExtra("Id", id)
+                startActivityForResult(next, 1)
             }
             else {
                 loginTV.setText("")
