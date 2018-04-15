@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended : false}))
 
 var connection = mysql.createConnection({
-    host: '172.20.10.4',
+    host: '192.168.43.196',
     user: "root",
     password: "kramptopedal",
     database: "db"
@@ -44,7 +44,7 @@ app.post('/users', (req, res, next) => {
         console.log(result)
         if(result == undefined || result.length == 0){
             
-            connection.query(`INSERT INTO users(login, password) VALUES ("${req.body.login}","${req.body.password}");`, (err, result) => {
+            connection.query(`INSERT INTO users(login, password, email) VALUES ("${req.body.login}","${req.body.password}", "${req.body.email}");`, (err, result) => {
                 if (err) throw err
                 
                 console.log('user added')
@@ -102,7 +102,7 @@ app.post('/checkUser', (req, res, next) => {
         if(result == undefined || result.length == 0){
             res.json({"status" : false})
         } else {
-            res.json({"status" : true})
+            res.json({"status" : true, "id":result[0].id})
         }
     })
 })
@@ -123,5 +123,15 @@ app.get('/activeUsers/:id', (req, res, next) => {
         if(err) throw err
        
         res.json(result[0])
+    })
+})
+
+app.post('/update', (req, res, next) => {
+    connection.query(`UPDATE activeUsers SET longt=${req.body.longt}, latt=${req.body.latt} WHERE user=${req.body.user}`, (err, result) => {
+        connection.query(`SELECT * FROM requests WHERE requestee=${req.body.id}`, (err, result, fields) => {
+            if(err) throw err
+
+            res.json(result)
+        })
     })
 })
