@@ -13,10 +13,13 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var dto = Dto()
         this.register.setOnClickListener {
             val reg = Intent(this, Register::class.java)
             startActivity(reg)
+        }
+        this.LoginButton.setOnClickListener {
+            val next = Intent(this, Info::class.java)
+            startActivity(next)
         }
     }
 }

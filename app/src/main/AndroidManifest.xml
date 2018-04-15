@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapsActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MapsActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -45,6 +45,7 @@
         <activity
             android:name=".GPS"
             android:label="@string/title_activity_gps"></activity>
+        <activity android:name=".Info" />
     </application>
 
 </manifest>

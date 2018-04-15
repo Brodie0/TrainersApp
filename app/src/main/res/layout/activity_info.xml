@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="program.trainersapp.Info">
+
+    <LinearLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:layout_weight="1.0"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/stats"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_weight="0.33"
+            android:text="STATYSTYKI" />
+        <TextView
+            android:id="@+id/history"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/stats"
+            android:layout_weight="0.33"
+            android:text="HISTORIA"/>
+        <TextView
+            android:id="@+id/friends"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_toRightOf="@+id/history"
+            android:layout_weight="0.34"
+            android:text="ZNAJOMI"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/goRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:background="@drawable/run_button"
+        android:text="RUN"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>
