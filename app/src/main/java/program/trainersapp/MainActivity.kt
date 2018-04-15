@@ -38,19 +38,8 @@ class MainActivity : Activity() {
             else {
                 loginTV.setText("")
                 passTV.setText("")
-                Toast.makeText(this@MainActivity, "Wrong login and/or password!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@MainActivity, "Nieprawidłowy login i/lub hasło!", Toast.LENGTH_SHORT).show();
             }
-
-
-
         }
-    }
-
-    fun login(view: View){
-        //val loginTV: EditText = findViewById(R.id.LoginText) as ed
-
-
-
-
     }
 }
