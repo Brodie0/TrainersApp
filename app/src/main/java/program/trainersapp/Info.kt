@@ -1,8 +1,10 @@
 package program.trainersapp
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import kotlinx.android.synthetic.main.activity_info.*
 import org.json.JSONObject
 import program.trainersapp.model.Dto
@@ -16,7 +18,7 @@ class Info : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
 
-        val Database = Dto()
+        val database = Dto()
 
         //On Click Actions
         this.stats.setOnClickListener {
@@ -62,6 +64,10 @@ class Info : Activity() {
             this.history.setBackgroundColor(Color.WHITE)
             this.stats.setBackgroundColor(Color.WHITE)
         }
+    }
 
+    fun switchToMapActivity(view : View){
+        val next = Intent(this, GPS::class.java)
+        startActivity(next)
     }
 }
