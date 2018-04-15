@@ -28,7 +28,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".MapsActivity" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,7 +43,7 @@
 
         <activity
             android:name=".GPS"
-            android:label="@string/title_activity_gps"></activity>
+            android:label="@string/title_activity_gps" />
         <activity android:name=".Info" />
     </application>
 
