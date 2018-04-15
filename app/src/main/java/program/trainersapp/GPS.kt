@@ -9,15 +9,13 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.gson.Gson
 import program.trainersapp.model.Dto
 import program.trainersapp.model.entities.ActiveUser
@@ -26,6 +24,8 @@ import program.trainersapp.model.entities.ActiveUser
 class GPS : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
+    private var nameMarker: EditText? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +33,7 @@ class GPS : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListener, Googl
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -64,18 +65,29 @@ class GPS : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListener, Googl
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),0)
             Toast.makeText(this, "No permission for location", Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun addMarkers(location: LatLng, actUser: ActiveUser) {
-        val marker = MarkerOptions().position(location).title(actUser.name + " " + actUser.lastname)
+        val mark = MarkerOptions().position(location).title(actUser.name + " " + actUser.lastname)
         val height = 120
         val width = 80
         val bitmapdraw = resources.getDrawable(R.drawable.icon) as BitmapDrawable
         val b = bitmapdraw.bitmap
         val smallMarker = Bitmap.createScaledBitmap(b, width, height, false)
         val ba = BitmapDescriptorFactory.fromBitmap(smallMarker)
-        marker.icon(ba)
-        mMap!!.addMarker(marker)
+        mark.icon(ba)
+
+        mMap!!.addMarker(mark)
+
+        mMap!!.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
+            override fun onMarkerClick(marker: Marker): Boolean {
+                marker.title = "test"
+                return false
+            }
+        })
+
+
     }
 
     override fun onMyLocationClick(location: Location) {
