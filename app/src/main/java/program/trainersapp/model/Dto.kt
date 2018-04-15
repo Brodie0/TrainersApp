@@ -16,7 +16,7 @@ class Dto {
 
 	fun post(table : String, body : String) : String {
         val path = Config.entryPoint + table
-        val json = DownloadTask().execute(path, "POST", body)
+        val json = DownloadTask().execute(path, "POST", body).get()
         return json.toString()
 	}
 }
