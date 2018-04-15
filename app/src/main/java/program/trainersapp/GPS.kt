@@ -82,7 +82,7 @@ class GPS : FragmentActivity(), GoogleMap.OnMyLocationButtonClickListener, Googl
 
         mMap!!.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
             override fun onMarkerClick(marker: Marker): Boolean {
-                marker.title = "test"
+
                 return false
             }
         })
