@@ -1,17 +1,24 @@
 package program.trainersapp
 
+import android.app.ActionBar
 import android.app.Activity
+import android.app.Fragment
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
-import android.text.Html
 import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.RelativeLayout.*
 import kotlinx.android.synthetic.main.activity_info.*
 import org.json.JSONObject
 import program.trainersapp.model.Dto
 import program.trainersapp.model.JsonParser
 import java.util.*
+import java.util.concurrent.locks.Lock
 import kotlin.collections.ArrayList
 
 class Info : Activity() {
@@ -20,11 +27,30 @@ class Info : Activity() {
     private var listHash: HashMap<String, ArrayList<String>>? = null
     val database = Dto()
     var bundle: Any? = null
+
+    var id: String? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
-
+        this.relLay.setBackgroundColor(Color.CYAN)
         bundle = intent.extras
+
+        val dto = Dto()
+
+        var PREFRENCES_NAME = "Name You Like"
+        var settings = this.getSharedPreferences(PREFRENCES_NAME, 0)
+        id = settings.getString("id", "")
+
+        val result = JSONObject(dto.getById("users", id?.toInt()!!))
+
+        this.nameText.text = result.get("name").toString()
+        this.lastnameText.text = result.get("lastname").toString()
+
+        this.history.setBackgroundColor(Color.WHITE)
+        this.stats.setBackgroundColor(Color.WHITE)
+        this.friends.setBackgroundColor(Color.WHITE)
 
         //On Click Actions
         this.stats.setOnClickListener {
@@ -33,6 +59,7 @@ class Info : Activity() {
             this.friends.setBackgroundColor(Color.WHITE)
             //clearing ExpandableListAdapter
             this.lvExp.setAdapter(ExpandableListAdapter(this, ArrayList(), HashMap()))
+            this.settings.visibility = View.INVISIBLE
 
             if(listHash!!.isEmpty() || listDataHeader!!.isEmpty())
                 createHistory(listHash, listDataHeader)
@@ -52,6 +79,7 @@ class Info : Activity() {
             this.stats.setBackgroundColor(Color.WHITE)
             this.friends.setBackgroundColor(Color.WHITE)
             this.statList.adapter = ArrayAdapter<String>(this, R.layout.adapter , ArrayList())
+            this.settings.visibility = View.INVISIBLE
 
             if(listHash!!.isEmpty() || listDataHeader!!.isEmpty())
                 createHistory(listHash, listDataHeader)
@@ -63,6 +91,48 @@ class Info : Activity() {
             this.friends.setBackgroundColor(Color.CYAN)
             this.history.setBackgroundColor(Color.WHITE)
             this.stats.setBackgroundColor(Color.WHITE)
+            //clearing Adapters
+            this.statList.adapter = ArrayAdapter<String>(this, R.layout.adapter , ArrayList())
+            this.lvExp.setAdapter(ExpandableListAdapter(this, ArrayList(), HashMap()))
+
+            this.settings.visibility = View.VISIBLE
+        }
+
+        //Edit Settings
+        this.edit.setOnClickListener {
+            this.nameText.visibility = View.GONE
+            this.lastnameText.visibility = View.GONE
+            this.changeLastname.visibility = View.VISIBLE
+            this.changeName.visibility = View.VISIBLE
+            this.acceptEdit.visibility = View.VISIBLE
+            this.edit.visibility = View.GONE
+        }
+
+        val inputManager:InputMethodManager =getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        //Apply Edit Settings
+        this.acceptEdit.setOnClickListener {
+            this.nameText.visibility = View.VISIBLE
+            this.lastnameText.visibility = View.VISIBLE
+            this.changeLastname.visibility = View.INVISIBLE
+            this.changeName.visibility = View.INVISIBLE
+            this.acceptEdit.visibility = View.GONE
+            this.edit.visibility = View.VISIBLE
+            val view: View = findViewById(android.R.id.content)
+            inputManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.SHOW_FORCED)
+
+            dto.post("updateName", """{"name" : """" + this.changeName.text.toString() + """", "lastname": """" + this.changeLastname.text.toString() + """", "id": """" + id + """"}""")
+
+            val result = JSONObject(dto.getById("users", id?.toInt()!!))
+
+            this.nameText.text = result.get("name").toString()
+            this.lastnameText.text = result.get("lastname").toString()
+        }
+
+        //LOG OUT
+        this.logout.setOnClickListener {
+            settings.edit().putString("Logged in", "false").putString("id", id).apply()
+            this.finish()
         }
     }
 
@@ -72,7 +142,7 @@ class Info : Activity() {
     }
 
     private fun createHistory(listHash: HashMap<String, ArrayList<String>>?, listDataHeader: ArrayList<String>?) {
-        val jsonHistory = JsonParser().parse(database.getById("history", 1))
+        val jsonHistory = JsonParser().parse(database.getById("history", id?.toInt()!!))
         for (it in jsonHistory) {
             val some = JSONObject(it)
             listDataHeader?.add("Dnia " + some.get("workout_date").toString().replace("T", " o godz ").replace("Z", ""))
